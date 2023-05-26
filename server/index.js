@@ -11,7 +11,7 @@ const PORT = 5000;
 dotenv.config();
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect("mongodb://127.0.0.1:27017/userdata")
   .then(() => {
     console.log("db connection successfull");
   })
