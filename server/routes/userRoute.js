@@ -12,9 +12,16 @@ router.post("/register", async (req, res) => {
 
   try {
     const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    res.status(201).json({
+      success: true,
+      message: "Registraion successfull",
+      user: savedUser,
+    });
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({
+      success: false,
+      message: "Registration failed",
+    });
   }
 });
 
@@ -25,13 +32,18 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email: email });
     if (user) {
       if (password === user.password) {
-        res.send({ message: "login sucess", user: user });
+        res
+          .status(200)
+          .json({ success: true, message: "login sucess", user: user });
       } else {
-        res.status(400).json({ message: "wrong credentials" });
+        res.status(400).json({ success: false, message: "wrong credentials" });
       }
     }
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({
+      success: false,
+      message: "login failed",
+    });
   }
 });
 

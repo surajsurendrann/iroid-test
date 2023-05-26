@@ -73,7 +73,11 @@ const Register = () => {
             </FormGroup>
             <FormGroup>
               <Label>Email</Label>
-              <Input type="text" onChange={(e) => setEmail(e.target.value)} />
+              <Input
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </FormGroup>
             <FormGroup>
               <Label>Password</Label>
@@ -82,6 +86,7 @@ const Register = () => {
                   type={passwordType}
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
+                  required
                 />
                 {showPassword ? (
                   <Img

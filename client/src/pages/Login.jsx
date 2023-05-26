@@ -17,27 +17,24 @@ const Login = () => {
   const [err, setErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { currentUser } = useContext(UserContext);
 
   async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
-
     try {
-      login(email, password);
-      if (currentUser) {
-        Swal.fire({
-          position: "top",
-          icon: "success",
-          title: "Login successfull",
-          showConfirmButton: false,
-          timer: 2000,
-        });
-
-        navigate("/home");
-      }
+      const response = await login(email, password);
+      Swal.fire({
+        position: "top",
+        icon: "success",
+        title: "Login successfull",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      setIsLoading(false);
+      navigate("/home");
     } catch (error) {
       setErr(true);
+      setIsLoading(false);
       console.log(error);
     }
   }
@@ -69,7 +66,7 @@ const Login = () => {
             <FormGroup>
               <Label>Email</Label>
               <Input
-                type="text"
+                type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 required
@@ -107,8 +104,12 @@ const Login = () => {
               <label>Remember Me </label>
             </RememberMe>
 
-            <Button type="submit">Login</Button>
-            {err && <span>something went wrong! </span>}
+            <Button type="submit" disabled={isLoading}>
+              Login
+            </Button>
+            <ErrorMsg>
+              {err && <span>something went wrong! Refresh </span>}
+            </ErrorMsg>
           </Form>
         </FormContainer>
 
@@ -267,4 +268,10 @@ const BottomContainer = styled.div`
   a {
     color: white;
   }
+`;
+
+const ErrorMsg = styled.div`
+  display: flex;
+  justify-content: center;
+  color: red;
 `;

@@ -93,7 +93,7 @@ const SelectionContainer = styled.div`
 const GridsContainer = styled.div`
   margin-top: 20px;
   display: flex;
-  justify-content: last baseline;
+  justify-content: center;
   width: 50%;
   height: 360px;
   flex-wrap: wrap;
